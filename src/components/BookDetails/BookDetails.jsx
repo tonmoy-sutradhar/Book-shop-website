@@ -1,5 +1,5 @@
 import { useLoaderData, useParams } from "react-router-dom";
-
+import { addToStoreReadList } from "../../utilits/addToDB";
 const BookDetails = () => {
   const { bookId } = useParams();
   const id = parseInt(bookId);
@@ -9,7 +9,7 @@ const BookDetails = () => {
   const book = data.find((b) => b.bookId === id);
   const { image, bookId: currentID, bookName } = book;
 
-  const handleMarkAsRead = () => {
+  const handleMarkAsRead = (id) => {
     /**
      * 1. understand what to store or save: => bookId
      * 2. where to store: database
@@ -18,6 +18,8 @@ const BookDetails = () => {
      * 5. if not, then add the book to the list
      * 6. if yes, do not add the list
      */
+
+    addToStoreReadList(id);
   };
   return (
     <div className="my-8">
@@ -26,7 +28,7 @@ const BookDetails = () => {
       <h1 className="text-xl font-thin mb-2">{bookName}</h1>
       <div className="flex gap-3">
         <button
-          onClick={() => handleMarkAsRead()}
+          onClick={() => handleMarkAsRead(bookId)}
           className="btn btn-outline btn-accent"
         >
           Mark As Read
